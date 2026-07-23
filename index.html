@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M4 Digital · App Downloads</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0C1420; color: #EAF0F8; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  .wrap { width: 100%; max-width: 640px; }
+  h1 { font-size: 22px; font-weight: 800; margin: 0 0 4px; letter-spacing: .3px; }
+  .sub { color: #8FA1B8; font-size: 14px; margin: 0 0 28px; }
+  .card {
+    background: #16202E; border: 1px solid rgba(255,255,255,.08); border-radius: 14px;
+    padding: 22px; margin-bottom: 16px;
+  }
+  .app { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .badge {
+    width: 54px; height: 54px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg,#4C8DFF,#2b62c9); display: flex;
+    align-items: center; justify-content: center; font-size: 26px;
+  }
+  .app h2 { font-size: 18px; margin: 0; font-weight: 700; }
+  .app p { margin: 3px 0 0; color: #8FA1B8; font-size: 13px; }
+  .btn {
+    display: inline-block; background: #4C8DFF; color: #fff; text-decoration: none;
+    font-weight: 700; padding: 14px 22px; border-radius: 10px; font-size: 16px;
+  }
+  .btn:active { background: #3f79db; }
+  .url {
+    margin-top: 16px; background: #0C1420; border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px; padding: 12px 14px; font-family: ui-monospace, Menlo, monospace;
+    font-size: 12.5px; color: #B9C6D8; word-break: break-all;
+  }
+  .hint { color: #8FA1B8; font-size: 13px; line-height: 1.5; margin-top: 14px; }
+  .qr { margin-top: 18px; text-align: center; }
+  .qr img { width: 168px; height: 168px; border-radius: 10px; background: #fff; padding: 8px; }
+  .qr p { color: #8FA1B8; font-size: 12px; margin: 8px 0 0; }
+  footer { color: #56657C; font-size: 12px; text-align: center; margin-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>M4 Digital · App Downloads</h1>
+    <p class="sub">Sideloadable Android TV builds. Always the latest CI release.</p>
+
+    <div class="card">
+      <div class="app">
+        <div class="badge">📺</div>
+        <div>
+          <h2>IPTV TV</h2>
+          <p>Android TV / Google TV player</p>
+        </div>
+      </div>
+
+      <a class="btn" href="https://github.com/m4-digital-co/public/releases/download/iptv-tv-latest/iptv-tv.apk">⬇ Download APK</a>
+
+      <div class="url" id="apkurl">https://github.com/m4-digital-co/public/releases/download/iptv-tv-latest/iptv-tv.apk</div>
+
+      <p class="hint">
+        On the TV: open the <b>Downloader</b> app (or a browser) and enter the URL above, or run
+        <code>adb install -r iptv-tv.apk</code> after downloading. The link always serves the newest build.
+      </p>
+
+      <div class="qr">
+        <img alt="QR code for the download URL"
+             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;data=https://github.com/m4-digital-co/public/releases/download/iptv-tv-latest/iptv-tv.apk" />
+        <p>Scan to open the download link</p>
+      </div>
+    </div>
+
+    <footer>Published automatically by CI · <a href="https://github.com/m4-digital-co/public/releases" style="color:#8FA1B8;">All releases</a></footer>
+  </div>
+</body>
+</html>
