@@ -100,10 +100,11 @@
       Object.keys(p).forEach(function (k) { if (p[k] == null || p[k] === '') delete p[k]; });
       return 'IPTV1.' + b64url(utf8Bytes(JSON.stringify(p)));
     }
-    // The app itself lives one level up (…/iptv/), and handles #add= links.
+    // Sibling files under …/iptv/. Web links go to the open.html landing page,
+    // which launches the native app if installed or the web player otherwise.
     var APP_BASE = location.href.split('#')[0].replace(/[^/]*$/, '');
     function deeplink(share) { return 'iptv://add?c=' + share; }
-    function weblink(share) { return APP_BASE + '#add=' + share; }
+    function weblink(share) { return APP_BASE + 'open.html#add=' + share; }
 
     function qrDataUrl(text) {
       if (typeof qrcode === 'undefined') return null;

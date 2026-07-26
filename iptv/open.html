@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Add to IPTV</title>
+  <meta name="description" content="Open this playlist in the IPTV app." />
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root {
+      --bg: #0b0f14; --card: #131a22; --line: #223040; --text: #e8eef5;
+      --dim: #93a4b8; --accent: #4f8cff; --accent-ink: #04122b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(1000px 500px at 50% -10%, #16233a 0%, var(--bg) 55%) no-repeat, var(--bg);
+      color: var(--text);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      width: 100%; max-width: 380px; background: var(--card); border: 1px solid var(--line);
+      border-radius: 18px; padding: 30px 24px; text-align: center;
+    }
+    .brand { letter-spacing: 6px; font-weight: 800; font-size: 13px; color: var(--accent); }
+    h1 { font-size: 22px; margin: 10px 0 2px; }
+    .name { font-size: 20px; font-weight: 800; margin: 6px 0 2px; }
+    .lock { color: var(--dim); font-size: 13px; margin: 2px 0 0; }
+    .lead { color: var(--dim); font-size: 14px; margin: 8px 0 22px; }
+    .btn {
+      display: block; width: 100%; text-align: center; text-decoration: none; cursor: pointer;
+      padding: 13px 16px; border-radius: 11px; font-weight: 700; font-size: 16px; margin-top: 10px;
+      border: 1px solid var(--line); background: #0f1620; color: var(--text);
+    }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .get { color: var(--dim); font-size: 13px; margin-top: 20px; }
+    .get a { color: var(--accent); }
+    .err { color: #ff6b6b; font-size: 14px; }
+    @media (prefers-color-scheme: light) {
+      :root { --bg:#f3f6fb; --card:#fff; --line:#dbe4ef; --text:#0d1826; --dim:#5a6b80; --accent-ink:#fff; }
+      body { background: radial-gradient(1000px 500px at 50% -10%, #dce9ff 0%, var(--bg) 55%) no-repeat, var(--bg); }
+      .btn { background:#f0f4fa; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="brand">I P T V</div>
+    <h1>Add this playlist</h1>
+    <div id="body"><p class="lead">Preparing…</p></div>
+    <p class="get">Don’t have the app yet? <a href="../">Get IPTV</a>.</p>
+  </div>
+
+  <script>
+    "use strict";
+    var B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    function b64urlToBytes(str) {
+      var out = [], buf = 0, bits = 0;
+      for (var i = 0; i < str.length; i++) {
+        var v = B64.indexOf(str[i]); if (v < 0) continue;
+        buf = (buf << 6) | v; bits += 6;
+        if (bits >= 8) { bits -= 8; out.push((buf >> bits) & 0xff); }
+      }
+      return out;
+    }
+    function bytesToUtf8(b) {
+      var s = '';
+      for (var i = 0; i < b.length;) {
+        var c = b[i++];
+        if (c < 0x80) s += String.fromCharCode(c);
+        else if (c < 0xe0) s += String.fromCharCode(((c & 0x1f) << 6) | (b[i++] & 0x3f));
+        else if (c < 0xf0) s += String.fromCharCode(((c & 0x0f) << 12) | ((b[i++] & 0x3f) << 6) | (b[i++] & 0x3f));
+        else { var cp = ((c & 0x07) << 18) | ((b[i++] & 0x3f) << 12) | ((b[i++] & 0x3f) << 6) | (b[i++] & 0x3f); cp -= 0x10000; s += String.fromCharCode(0xd800 + (cp >> 10), 0xdc00 + (cp & 0x3ff)); }
+      }
+      return s;
+    }
+    // Read the token from #add=… (preferred) or ?c=…
+    function token() {
+      var m = (location.hash + '&' + location.search).match(/(?:add=|c=)(IPTV1E?\.[A-Za-z0-9\-_]+)/);
+      return m ? m[1] : null;
+    }
+    // For a plain (unencrypted) token, pull out the playlist name for a nicer prompt.
+    function nameOf(tok) {
+      try { if (tok.indexOf('IPTV1E.') === 0) return null; var p = JSON.parse(bytesToUtf8(b64urlToBytes(tok.slice(6)))); return p && p.n || null; } catch (e) { return null; }
+    }
+
+    var el = function (t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+    var body = document.getElementById('body');
+    var tok = token();
+
+    if (!tok) {
+      body.innerHTML = '<p class="err">This link doesn’t contain a playlist.</p>';
+    } else {
+      var deeplink = 'iptv://add?c=' + tok;
+      // The web app lives one level up (…/iptv/) and handles #add= itself.
+      var webApp = location.href.split('#')[0].replace(/[^/]*$/, '') + '#add=' + tok;
+      var encrypted = tok.indexOf('IPTV1E.') === 0;
+      var name = nameOf(tok);
+
+      body.innerHTML = '';
+      if (name) body.appendChild(el('p', 'name', name));
+      if (encrypted) body.appendChild(el('p', 'lock', '🔒 Passphrase-protected'));
+      body.appendChild(el('p', 'lead', 'Open it in the IPTV app to add it and start watching.'));
+
+      var app = el('a', 'btn primary', 'Open in IPTV app'); app.href = deeplink; body.appendChild(app);
+      var web = el('a', 'btn', 'Open in web player'); web.href = webApp; body.appendChild(web);
+
+      // Best-effort: if the native app is installed, this hands off automatically.
+      setTimeout(function () { try { location.href = deeplink; } catch (e) {} }, 600);
+    }
+  </script>
+</body>
+</html>
