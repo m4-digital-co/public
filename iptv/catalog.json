@@ -1,0 +1,13 @@
+{
+  "_comment": "Public playlist directory for the IPTV app (Add ▸ Browse) and the website. Edit + redeploy to update without an app release. Xtream entries: omit the password — the recipient enters their own on-device.",
+  "playlists": [
+    { "id": "au-sydney", "name": "AU · Sydney", "region": "Australia", "description": "Free-to-air Sydney channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Sydney/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Sydney/epg.xml.gz" },
+    { "id": "au-melbourne", "name": "AU · Melbourne", "region": "Australia", "description": "Free-to-air Melbourne channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Melbourne/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Melbourne/epg.xml.gz" },
+    { "id": "au-brisbane", "name": "AU · Brisbane", "region": "Australia", "description": "Free-to-air Brisbane channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Brisbane/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Brisbane/epg.xml.gz" },
+    { "id": "au-perth", "name": "AU · Perth", "region": "Australia", "description": "Free-to-air Perth channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Perth/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Perth/epg.xml.gz" },
+    { "id": "au-adelaide", "name": "AU · Adelaide", "region": "Australia", "description": "Free-to-air Adelaide channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Adelaide/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Adelaide/epg.xml.gz" },
+    { "id": "au-canberra", "name": "AU · Canberra", "region": "Australia", "description": "Free-to-air Canberra channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Canberra/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Canberra/epg.xml.gz" },
+    { "id": "au-hobart", "name": "AU · Hobart", "region": "Australia", "description": "Free-to-air Hobart channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Hobart/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Hobart/epg.xml.gz" },
+    { "id": "au-darwin", "name": "AU · Darwin", "region": "Australia", "description": "Free-to-air Darwin channels with EPG", "type": "m3u", "url": "https://i.mjh.nz/au/Darwin/kodi-tv.m3u8", "epgUrl": "https://i.mjh.nz/au/Darwin/epg.xml.gz" }
+  ]
+}
