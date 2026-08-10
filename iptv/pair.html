@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0C1420" />
+  <title>Send a playlist to your TV</title>
+  <!--
+    The page a phone lands on after scanning a TV's "Scan to send" QR.
+
+    Everything secret (the request id and the one-time key) arrives in the URL
+    FRAGMENT, which browsers never send to the server — so this host, GitHub
+    Pages, never sees either. The playlist is encrypted here with WebCrypto
+    AES-256-GCM under that key, and only the TV that drew the QR can open it;
+    the relay stores ciphertext it cannot read.
+
+    Field names below are the compact `Packed` shape from src/data/shareLink.ts;
+    the crypto layout (nonce(12) ‖ ciphertext+tag, base64url, IPTV1K. prefix)
+    matches src/data/shareCrypto.ts. Both are covered by
+    src/data/pairingInterop.test.ts, which encrypts exactly as this page does and
+    decrypts with the app's cipher.
+  -->
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 24px 18px 48px;
+      background: #0C1420; color: #E7EDF6;
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .wrap { max-width: 460px; margin: 0 auto; }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    p.lead { color: #9FB0C6; margin: 0 0 20px; }
+    fieldset { border: 1px solid #1E2A3C; border-radius: 12px; padding: 14px; margin: 0 0 14px; background: #121C2B; }
+    legend { padding: 0 6px; color: #9FB0C6; font-size: 13px; font-weight: 700; }
+    label { display: block; font-size: 13px; color: #9FB0C6; margin: 10px 0 4px; }
+    input {
+      width: 100%; padding: 11px 12px; border-radius: 8px;
+      border: 1px solid #1E2A3C; background: #0C1420; color: #E7EDF6; font-size: 16px;
+    }
+    .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    .tabs button {
+      flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #1E2A3C;
+      background: #121C2B; color: #E7EDF6; font-size: 15px; font-weight: 700;
+    }
+    .tabs button[aria-selected="true"] { border-color: #4C9AFF; color: #4C9AFF; background: #10203A; }
+    button.send {
+      width: 100%; padding: 14px; border-radius: 10px; border: 0;
+      background: #4C9AFF; color: #06101F; font-size: 17px; font-weight: 800;
+    }
+    button.send:disabled { opacity: .5; }
+    .state { margin-top: 16px; padding: 12px; border-radius: 8px; font-size: 14px; }
+    .ok { background: #10301E; color: #7EE2A8; }
+    .err { background: #331A20; color: #FF9AA8; }
+    .hint { color: #7C8CA3; font-size: 13px; margin-top: 18px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Send a playlist to your TV</h1>
+  <p class="lead" id="lead">Encrypted to that TV's screen before it leaves this phone.</p>
+
+  <div id="form">
+    <div class="tabs" role="tablist">
+      <button id="tabM3u" role="tab" aria-selected="true" onclick="pickKind('m3u')">M3U / M3U8</button>
+      <button id="tabXt" role="tab" aria-selected="false" onclick="pickKind('xt')">Xtream Codes</button>
+    </div>
+
+    <fieldset>
+      <legend>Playlist</legend>
+      <label for="name">Name (optional)</label>
+      <input id="name" autocomplete="off" placeholder="My Provider" />
+
+      <div id="m3uFields">
+        <label for="url">M3U URL</label>
+        <input id="url" type="url" inputmode="url" autocomplete="off" placeholder="https://…/get.php?…" />
+        <label for="epg">EPG URL (optional)</label>
+        <input id="epg" type="url" inputmode="url" autocomplete="off" placeholder="https://…/xmltv.php?…" />
+      </div>
+
+      <div id="xtFields" hidden>
+        <label for="host">Server URL</label>
+        <input id="host" type="url" inputmode="url" autocomplete="off" placeholder="http://host:8080" />
+        <label for="user">Username</label>
+        <input id="user" autocomplete="off" autocapitalize="none" />
+        <label for="pass">Password</label>
+        <input id="pass" type="password" autocomplete="off" />
+      </div>
+    </fieldset>
+
+    <button class="send" id="send" onclick="send()">Send to TV</button>
+  </div>
+
+  <div id="state" class="state" hidden></div>
+
+  <p class="hint">
+    Nothing is stored on this page. The playlist is encrypted in your browser and can only be opened by the TV showing
+    that code — it expires in a few minutes.
+  </p>
+</div>
+
+<script>
+  // ---- Firestore relay (public web API key by design; writes are constrained
+  // by security rules, and the payload is ciphertext regardless). ----
+  var PROJECT_ID = 'iptv-tv-share';
+  var API_KEY = 'AIzaSyBL7K2nlsqfw_FX--CiWCMzNbcN03fNgWM';
+  var COLLECTION = 'pair';
+  var TTL_MINUTES = 5;
+  var PAIR_PREFIX = 'IPTV1K.';
+  var NONCE_LEN = 12;
+
+  var kind = 'm3u';
+  var req = parseFragment();
+
+  function parseFragment() {
+    var frag = location.hash.replace(/^#/, '');
+    var out = {};
+    frag.split('&').forEach(function (part) {
+      var i = part.indexOf('=');
+      if (i > 0) out[part.slice(0, i)] = part.slice(i + 1);
+    });
+    if (out.v !== '1' || !out.r || !out.k) return null;
+    var key = b64urlToBytes(out.k);
+    if (!key || key.length !== 32) return null;
+    return { reqId: out.r, key: key };
+  }
+
+  function b64urlToBytes(s) {
+    try {
+      var b64 = s.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      var bin = atob(b64);
+      var out = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    } catch (e) { return null; }
+  }
+
+  function bytesToB64url(bytes) {
+    var bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function pickKind(k) {
+    kind = k;
+    document.getElementById('tabM3u').setAttribute('aria-selected', String(k === 'm3u'));
+    document.getElementById('tabXt').setAttribute('aria-selected', String(k === 'xt'));
+    document.getElementById('m3uFields').hidden = k !== 'm3u';
+    document.getElementById('xtFields').hidden = k !== 'xt';
+  }
+
+  function show(msg, cls) {
+    var el = document.getElementById('state');
+    el.textContent = msg;
+    el.className = 'state ' + cls;
+    el.hidden = false;
+  }
+
+  function val(id) { return (document.getElementById(id).value || '').trim(); }
+
+  // Compact `Packed` shape from src/data/shareLink.ts — keys must match exactly.
+  function buildPacked() {
+    var name = val('name') || undefined;
+    if (kind === 'm3u') {
+      var url = val('url');
+      if (!url) throw new Error('Enter the M3U URL.');
+      return { t: 'm3u', n: name, u: url, e: val('epg') || undefined };
+    }
+    var host = val('host'), user = val('user');
+    if (!host || !user) throw new Error('Enter the server URL and username.');
+    return { t: 'xt', n: name, h: host, s: user, p: val('pass') || undefined };
+  }
+
+  async function encryptToKey(packed, key) {
+    var nonce = crypto.getRandomValues(new Uint8Array(NONCE_LEN));
+    var ck = await crypto.subtle.importKey('raw', key, 'AES-GCM', false, ['encrypt']);
+    var ct = new Uint8Array(
+      await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce }, ck, new TextEncoder().encode(JSON.stringify(packed)))
+    );
+    var blob = new Uint8Array(NONCE_LEN + ct.length);
+    blob.set(nonce, 0);
+    blob.set(ct, NONCE_LEN);
+    return PAIR_PREFIX + bytesToB64url(blob);
+  }
+
+  async function send() {
+    if (!req) return;
+    var btn = document.getElementById('send');
+    btn.disabled = true;
+    try {
+      var token = await encryptToKey(buildPacked(), req.key);
+      var expireAt = new Date(Date.now() + TTL_MINUTES * 60000).toISOString();
+      var url =
+        'https://firestore.googleapis.com/v1/projects/' + PROJECT_ID +
+        '/databases/(default)/documents/' + COLLECTION +
+        '?documentId=' + encodeURIComponent(req.reqId) + '&key=' + API_KEY;
+      var res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: { blob: { stringValue: token }, expireAt: { timestampValue: expireAt } }
+        })
+      });
+      if (res.status === 409) throw new Error('That code was already used — show a new one on the TV.');
+      if (!res.ok) throw new Error('Could not send (' + res.status + ').');
+      document.getElementById('form').hidden = true;
+      show('Sent. Your TV should be adding it now.', 'ok');
+    } catch (e) {
+      show(e && e.message ? e.message : 'Could not send the playlist.', 'err');
+      btn.disabled = false;
+    }
+  }
+
+  if (!req) {
+    document.getElementById('form').hidden = true;
+    document.getElementById('lead').textContent = '';
+    show('This link is missing its pairing code. On the TV, open Playlists → Add → "Scan to send" and scan the QR it shows.', 'err');
+  } else if (!(window.crypto && crypto.subtle)) {
+    // Only available in secure contexts — worth saying plainly rather than
+    // failing later with an opaque error.
+    document.getElementById('form').hidden = true;
+    show('This browser cannot encrypt the playlist (WebCrypto unavailable). Try Chrome or Safari over https.', 'err');
+  }
+</script>
+</body>
+</html>
