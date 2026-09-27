@@ -1,5 +1,15 @@
 {
   "_comment": "Public playlist directory for the IPTV app (Add ▸ Browse) and the website. Edit + redeploy to update without an app release. Xtream entries: omit the password — the recipient enters their own on-device.",
-  "_note": "Intentionally empty. This app is bring-your-own-playlist and ships no content; the AU free-to-air entries that used to sit here were test fixtures, not something to ship. Add curated entries here only if they are ours to distribute.",
-  "playlists": []
+  "_note": "Only list playlists that are ours to distribute. The app ships no content; the AU free-to-air entries that used to sit here were test fixtures. The demo lineup below is M4 Digital's own: invented channels and guide, openly licensed video (see /public/tv/credits/).",
+  "playlists": [
+    {
+      "id": "m4-demo",
+      "name": "Demo TV",
+      "region": "Worldwide",
+      "description": "Twelve invented channels with a live guide, plus movies and shows on demand. Openly licensed films and footage, by M4 Digital.",
+      "logo": "https://m4-digital-co.github.io/public/tv/logo.svg",
+      "type": "m3u",
+      "url": "https://m4-digital-co.github.io/public/tv/demo/playlist.m3u"
+    }
+  ]
 }
