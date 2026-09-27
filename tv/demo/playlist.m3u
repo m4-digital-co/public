@@ -1,0 +1,25 @@
+#EXTM3U url-tvg="https://m4-digital-co.github.io/public/tv/demo/epg.xml.gz"
+#EXTINF:-1 tvg-id="northwind" tvg-chno="101" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/northwind.svg" group-title="News" x-live-loop="0-1200",Northwind News
+https://upload.wikimedia.org/wikipedia/commons/transcoded/9/97/Time-lapse_of_New_York_City_skyline_July_2023.webm/Time-lapse_of_New_York_City_skyline_July_2023.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="harbour" tvg-chno="102" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/harbour.svg" group-title="Sport" x-live-loop="0-490",Harbour Sport
+https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/Surfing_competition_at_Salt_Creek_Beach%2C_Dana_Point%2C_California%2C_USA_as_viewed_from_a_FPV_drone.webm/Surfing_competition_at_Salt_Creek_Beach%2C_Dana_Point%2C_California%2C_USA_as_viewed_from_a_FPV_drone.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="atlas" tvg-chno="103" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/atlas.svg" group-title="Documentary" x-live-loop="1",Atlas Docs
+https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Santa_Rosa_and_San_Jacinto_Mountains_National_Monument_%2829552839442%29.webm/Santa_Rosa_and_San_Jacinto_Mountains_National_Monument_%2829552839442%29.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="kiln" tvg-chno="104" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/kiln.svg" group-title="Lifestyle" x-live-loop="1",Kiln Kitchen
+https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Milchkochen.webm/Milchkochen.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="pulse" tvg-chno="105" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/pulse.svg" group-title="Music" x-live-loop="1",Pulse Music
+https://upload.wikimedia.org/wikipedia/commons/transcoded/7/70/Colorful_Autumn_%E2%80%94_Stage_Excerpt_-_Mortaz_Band.ogg/Colorful_Autumn_%E2%80%94_Stage_Excerpt_-_Mortaz_Band.ogg.1080p.vp9.webm
+#EXTINF:-1 tvg-id="orbit" tvg-chno="106" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/orbit.svg" group-title="Documentary" x-live-loop="0-330",Orbit Science
+https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5d/Artemis_I_Launch_%28Artemis_I_Launch_2022_CU_tracking_from_Press_Site_compressed%29.webm/Artemis_I_Launch_%28Artemis_I_Launch_2022_CU_tracking_from_Press_Site_compressed%29.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="meadow" tvg-chno="107" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/meadow.svg" group-title="Kids" x-live-loop="20-560",Meadow Kids
+https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="summit" tvg-chno="108" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/summit.svg" group-title="Lifestyle" x-live-loop="0-230",Summit Outdoors
+https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f5/Hiking_around_Predjama_%28Slovenia%29.webm/Hiking_around_Predjama_%28Slovenia%29.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="reel" tvg-chno="109" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/reel.svg" group-title="Movies" x-live-loop="240-6500",Reel Classics
+https://upload.wikimedia.org/wikipedia/commons/d/dc/Charade_%281963%29.webm
+#EXTINF:-1 tvg-id="tidewater" tvg-chno="110" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/tidewater.svg" group-title="Lifestyle" x-live-loop="1",Tidewater Travel
+https://upload.wikimedia.org/wikipedia/commons/transcoded/2/21/Body_surfing_a_wave.webm/Body_surfing_a_wave.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="ember" tvg-chno="111" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/ember.svg" group-title="Entertainment" x-live-loop="20-560",Ember Drama
+https://upload.wikimedia.org/wikipedia/commons/transcoded/7/74/Sprite_Fright_-_Open_Movie_by_Blender_Studio.webm/Sprite_Fright_-_Open_Movie_by_Blender_Studio.webm.1080p.vp9.webm
+#EXTINF:-1 tvg-id="nova" tvg-chno="112" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/nova.svg" group-title="Movies" x-live-loop="60-620",Nova Cinema
+https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Tears_of_Steel_1080p.webm/Tears_of_Steel_1080p.webm.1080p.vp9.webm
