@@ -1,0 +1,93 @@
+{
+  "movies": [
+    {
+      "id": "nova",
+      "name": "Tears of Steel",
+      "category": "Movies",
+      "year": 2012,
+      "runtime": 12,
+      "genre": "Sci-Fi · Short",
+      "cast": "Derek de Lint, Sergio Hasselbaink, Rogier Schippers",
+      "director": "Ian Hubert",
+      "plot": "In a future Amsterdam, a group of scientists stage a last-ditch attempt to save the world from destructive robots. (Blender Foundation · CC BY 3.0)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/c/cb/Tears_of_Steel_1080p.webm/Tears_of_Steel_1080p.webm.1080p.vp9.webm",
+      "poster": "https://m4-digital-co.github.io/public/tv/demo/art/nova-poster.jpg",
+      "backdrop": "https://m4-digital-co.github.io/public/tv/demo/art/nova-backdrop.jpg"
+    },
+    {
+      "id": "reel",
+      "name": "Charade",
+      "category": "Movies",
+      "year": 1963,
+      "runtime": 113,
+      "genre": "Romance · Thriller",
+      "cast": "Cary Grant, Audrey Hepburn, Walter Matthau",
+      "director": "Stanley Donen",
+      "plot": "A widow in Paris is hunted by her late husband's wartime associates, who want the fortune he stole. (Stanley Donen · Public domain)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Charade_%281963%29.webm",
+      "poster": "https://m4-digital-co.github.io/public/tv/demo/art/reel-poster.jpg",
+      "backdrop": "https://m4-digital-co.github.io/public/tv/demo/art/reel-backdrop.jpg"
+    },
+    {
+      "id": "ember",
+      "name": "Sprite Fright",
+      "category": "Animation",
+      "year": 2021,
+      "runtime": 10,
+      "genre": "Animation · Horror comedy",
+      "director": "Matthew Luhn, Hjalti Hjálmarsson",
+      "plot": "A group of rowdy teenagers on a forest trip run into a colony of tiny, easily offended mushroom folk. (Blender Studio · CC BY 4.0)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/74/Sprite_Fright_-_Open_Movie_by_Blender_Studio.webm/Sprite_Fright_-_Open_Movie_by_Blender_Studio.webm.1080p.vp9.webm",
+      "poster": "https://m4-digital-co.github.io/public/tv/demo/art/ember-poster.jpg",
+      "backdrop": "https://m4-digital-co.github.io/public/tv/demo/art/ember-backdrop.jpg"
+    },
+    {
+      "id": "meadow",
+      "name": "Big Buck Bunny",
+      "category": "Animation",
+      "year": 2008,
+      "runtime": 10,
+      "genre": "Animation · Family",
+      "director": "Sacha Goedegebure",
+      "plot": "A gentle giant rabbit takes his revenge on three bullying rodents. (Blender Foundation · CC BY 3.0)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.1080p.vp9.webm",
+      "poster": "https://m4-digital-co.github.io/public/tv/demo/art/meadow-poster.jpg",
+      "backdrop": "https://m4-digital-co.github.io/public/tv/demo/art/meadow-backdrop.jpg"
+    }
+  ],
+  "series": [
+    {
+      "id": "orbit",
+      "name": "Earth & Sky",
+      "category": "Documentary",
+      "year": 2023,
+      "genre": "Documentary",
+      "plot": "Launches, skylines, surf and trails: a collection of openly licensed footage.",
+      "poster": "https://m4-digital-co.github.io/public/tv/demo/art/orbit-poster.jpg",
+      "backdrop": "https://m4-digital-co.github.io/public/tv/demo/art/orbit-backdrop.jpg",
+      "seasons": [
+        {
+          "season": 1,
+          "episodes": [
+            {
+              "title": "Artemis I Launch (NASA Marshall Space Flight Center · Public domain)",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5d/Artemis_I_Launch_%28Artemis_I_Launch_2022_CU_tracking_from_Press_Site_compressed%29.webm/Artemis_I_Launch_%28Artemis_I_Launch_2022_CU_tracking_from_Press_Site_compressed%29.webm.1080p.vp9.webm"
+            },
+            {
+              "title": "New York City Time-lapse (David Schwab · CC BY 3.0)",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/9/97/Time-lapse_of_New_York_City_skyline_July_2023.webm/Time-lapse_of_New_York_City_skyline_July_2023.webm.1080p.vp9.webm"
+            },
+            {
+              "title": "Surfing at Salt Creek Beach (Daniel Peckham · CC BY 3.0)",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/Surfing_competition_at_Salt_Creek_Beach%2C_Dana_Point%2C_California%2C_USA_as_viewed_from_a_FPV_drone.webm/Surfing_competition_at_Salt_Creek_Beach%2C_Dana_Point%2C_California%2C_USA_as_viewed_from_a_FPV_drone.webm.1080p.vp9.webm"
+            },
+            {
+              "title": "Hiking around Predjama (caveman0043 · CC BY 3.0)",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f5/Hiking_around_Predjama_%28Slovenia%29.webm/Hiking_around_Predjama_%28Slovenia%29.webm.1080p.vp9.webm"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

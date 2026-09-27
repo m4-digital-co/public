@@ -1,4 +1,4 @@
-#EXTM3U url-tvg="https://m4-digital-co.github.io/public/tv/demo/epg.xml.gz"
+#EXTM3U url-tvg="https://m4-digital-co.github.io/public/tv/demo/epg.xml.gz" x-vod-url="https://m4-digital-co.github.io/public/tv/demo/vod.json"
 #EXTINF:-1 tvg-id="northwind" tvg-chno="101" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/northwind.svg" group-title="News" x-live-loop="0-1200",Northwind News
 https://upload.wikimedia.org/wikipedia/commons/transcoded/9/97/Time-lapse_of_New_York_City_skyline_July_2023.webm/Time-lapse_of_New_York_City_skyline_July_2023.webm.1080p.vp9.webm
 #EXTINF:-1 tvg-id="harbour" tvg-chno="102" tvg-logo="https://m4-digital-co.github.io/public/tv/demo/logos/harbour.svg" group-title="Sport" x-live-loop="0-490",Harbour Sport
