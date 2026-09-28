@@ -106,6 +106,13 @@
 
       var app = el('a', 'btn primary', 'Open in IPTV app'); app.href = deeplink; body.appendChild(app);
       var web = el('a', 'btn', 'Open in web player'); web.href = webApp; body.appendChild(web);
+      // Watching on a TV? The TV shows a code (Add playlist ▸ Send from phone);
+      // the send page takes this playlist and just asks for that code.
+      if (!encrypted) {
+        var tv = el('a', 'btn', '📺  Send to my TV');
+        tv.href = location.href.split('#')[0].replace(/iptv\/[^/]*$/, 'tv/send/') + '#add=' + tok;
+        body.appendChild(tv);
+      }
 
       // Best-effort: if the native app is installed, this hands off automatically.
       setTimeout(function () { try { location.href = deeplink; } catch (e) {} }, 600);
